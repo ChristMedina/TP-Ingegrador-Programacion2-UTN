@@ -1,0 +1,21 @@
+# Carpetas de compilación
+bin/
+obj/
+
+# Archivos temporales de Code::Blocks
+*.depend
+*.layout
+
+# Archivos ejecutables
+*.exe
+*.dll
+*.out
+
+# Archivos no deseados
+n
+null
+
+# Archivos de backup o del sistema
+*.bak
+*.tmp
+Thumbs.db

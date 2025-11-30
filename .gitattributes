@@ -1,0 +1,24 @@
+# Forzar LF (Unix) como fin de línea en archivos de código fuente
+*.cpp text eol=lf
+*.h   text eol=lf
+*.c   text eol=lf
+*.hpp text eol=lf
+*.layout text eol=lf
+
+# Forzar LF en archivos de proyecto de Code::Blocks
+*.cbp text eol=lf
+
+# Archivos de configuración / scripts
+*.sh  text eol=lf
+*.py  text eol=lf
+*.md  text eol=lf
+*.txt text eol=lf
+
+# Archivos binarios (sin conversión de fin de línea)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.exe binary
+*.dll binary
