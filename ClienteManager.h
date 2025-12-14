@@ -5,7 +5,7 @@
 class ClienteManager{
 private:
     ClienteArchivo _archivoC;
-    void mostrarCliente(Cliente &obj);
+    Cliente _cliente;
 
     void buscarPorDNI();
     void buscarPorNombre();
@@ -14,6 +14,7 @@ private:
 public:
     void cargar();
     bool cargarCliente(Cliente &obj);
+    void mostrarCliente(Cliente &obj);
     void mostrarTodos();
     void buscar();
     void modificar();

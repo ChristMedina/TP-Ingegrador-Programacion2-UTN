@@ -4,13 +4,25 @@
 
 using namespace std;
 
-Cliente::Cliente() {
-    _dni[0] = '\0';
-    _nombre[0] = '\0';
-    _apellido[0] = '\0';
-    _email[0] = '\0';
-    _telefono[0] = '\0';
-    _estado = false;
+Cliente::Cliente(){
+    strcpy(_dni, "");
+    strcpy(_nombre, "");
+    strcpy(_apellido, "");
+    strcpy(_email, "");
+    strcpy(_telefono, "");
+    _estado=false;
+}
+
+Cliente::Cliente(const char* dni, const char* nombre,
+                 const char* apellido, const char* email,
+                 const char* telefono, bool estado)
+{
+    setDNI(dni);
+    setNombre(nombre);
+    setApellido(apellido);
+    setEmail(email);
+    setTelefono(telefono);
+    setEstado(estado);
 }
 
 // Setters

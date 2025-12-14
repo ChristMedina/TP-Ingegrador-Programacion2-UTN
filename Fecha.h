@@ -14,7 +14,9 @@ class Fecha {
         void cargar();
         void mostrar();
         bool esFechaValida();
-        bool operator==(const Fecha &f);
+        bool operator==(const Fecha& otra);
+        bool operator<(const Fecha& otra);
+        bool operator>(const Fecha& otra);
 
 
         //setters

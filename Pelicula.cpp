@@ -4,13 +4,25 @@
 
 using namespace std;
 
-Pelicula::Pelicula() {
-    _idPelicula = 0;
-    _clasificacion = 0;
-    _nombrePelicula[0] = '\0';
-    _nombreDirector[0] = '\0';
-    _genero[0] = '\0';
-    _estado = false;
+Pelicula::Pelicula(){
+    _idPelicula=0;
+    strcpy(_nombrePelicula, "");
+    strcpy(_nombreDirector, "");
+    strcpy(_genero, "");
+    _clasificacion=0;
+    _estado=false;
+}
+
+Pelicula::Pelicula(int id, const char* nombrePeli, const char* nombreDire,
+                   const char* genero, int clasificacion, Fecha fecha, bool estado)
+{
+    setIDPelicula(id);
+    setNombrePelicula(nombrePeli);
+    setNombreDirector(nombreDire);
+    setGenero(genero);
+    setClasificacion(clasificacion);
+    setFechaEstreno(fecha);
+    setEstado(estado);
 }
 
 // Setters

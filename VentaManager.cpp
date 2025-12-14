@@ -22,11 +22,48 @@ void VentaManager::cargar() {
 bool VentaManager::cargarVenta(Venta &obj) {
     system("cls");
 
+    //DNI
+    char dni[9];
+    cout << "Ingrese su DNI: ";
+    cargarCadena(dni, 9);
+
+    if (!clienteActivo(dni)) {
+        cout << "El cliente no existe o esta inactivo." << endl;
+        cout << "¨Desea registrarlo ahora? (1-Si / 0-No): ";
+        int op = leerEntero();
+
+        if (op == 1) {
+            ClienteManager cm;
+            Cliente nuevo;
+
+            if (cm.cargarCliente(nuevo)) {
+                if (_archivoC.guardar(nuevo)) {
+                    cout << "Cliente cargado exitosamente." << endl;
+
+                } else {
+                    cout << "Error al guardar el cliente." << endl;
+                    return false;
+                }
+            } else {
+                cout << "Error al cargar los datos del cliente." << endl;
+                return false;
+            }
+        } else {
+            cout << "No se puede continuar sin cliente"<<endl;
+            return false;
+        }
+    }
+    obj.setDNIComprador(dni);
+
+
+    //ID Venta automatica
     int id = _archivoV.asignarID();
     obj.setIDVenta(id);
-    cout << "ID asignado: " << id << endl;
+    cout << "ID de venta asignado: " << id << endl;
 
-    cout << "ID Pel¡cula: ";
+
+    //Pelicula
+    cout << "Ingrese el ID de la pelicula: ";
     int idPeli = leerEntero();
 
     if (!peliculaActiva(idPeli)) {
@@ -47,6 +84,8 @@ bool VentaManager::cargarVenta(Venta &obj) {
         tipoSala = leerEntero();
     }
 
+
+    //Sala
     Sala sala;
     bool encontrada = false;
     int totalSalas = _archivoS.contarRegistros();
@@ -56,7 +95,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
             if (sala.getTipoSala() == tipoSala && sala.getEstado()){
 
                 obj.setIDSala(sala.getIDSala());// settea el id aca
-                cout << "Sala asignada autom ticamente: "
+                cout << "Sala asignada: "
                      << sala.getNombreSala()<<" (ID "<<sala.getIDSala() << ")" << endl;
                 encontrada = true;
                 break;
@@ -69,46 +108,32 @@ bool VentaManager::cargarVenta(Venta &obj) {
         return false;
     }
 
+    //Fecha
     Fecha fecha;
-    cout << "Fecha de proyeccion: " << endl;
+    cout << "Ingrese la fecha de proyeccion: " << endl;
     fecha.cargar();
+
+    int pos = _archivoP.buscarPorID(idPeli);
+    if (pos == -1) {
+        cout << "No se encontro la pelicula." << endl;
+        return false;
+    }
+
+    Pelicula peli;
+    if (!_archivoP.leer(peli, pos)) {
+        cout << "Error al leer pelicula." << endl;
+        return false;
+    }
+
+    if (fecha < peli.getFechaEstreno()) {
+        cout << "La proyeccion no puede ser antes del estreno." << endl;
+        return false;
+    }
     obj.setFechaProyeccion(fecha);
     cin.ignore(1000,'\n');
 
-    char dni[9];
-    cout << "DNI del comprador: ";
-    cargarCadena(dni, 9);
 
-    if (!clienteActivo(dni)) {
-        cout << "El cliente no existe o esta inactivo." << endl;
-        cout << "¨Desea registrarlo ahora? (1-Si / 0-No): ";
-        int op = leerEntero();
-
-        if (op == 1) {
-            ClienteManager cm;
-            Cliente nuevo;
-
-            if (cm.cargarCliente(nuevo)) {
-                if (_archivoC.guardar(nuevo)) {
-                    cout << "Cliente cargado exitosamente." << endl;
-
-                } else {
-                    cout << "Error al guardar el cliente en el archivo." << endl;
-                    return false;
-                }
-            } else {
-                cout << "Error al cargar los datos del cliente." << endl;
-                return false;
-            }
-        } else {
-            cout << "No se puede continuar sin cliente"<<endl;
-            return false;
-        }
-    }
-
-    obj.setDNIComprador(dni);
-
-
+    //Cantidad de entradas
     int cap = capacidadSala(sala.getIDSala());
     int vendidas = entradasVendidas(idPeli, sala.getIDSala(), fecha);
     int disponibles = cap - vendidas;
@@ -119,7 +144,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
     }
 
     cout << "Entradas disponibles: " << disponibles << endl;
-    cout << "Cantidad de entradas: ";
+    cout << "Ingrese la cantidad a comprar: ";
     int cant = leerEntero();
 
     while (cant <= 0 || cant > disponibles) {
@@ -128,6 +153,8 @@ bool VentaManager::cargarVenta(Venta &obj) {
     }
     obj.setCantEntradas(cant);
 
+
+    //Precio
     float precioUnitario = precioPorTipoSala(sala.getTipoSala());
     if (precioUnitario <= 0) {
         cout << "Error: tipo de sala inv lido." << endl;
@@ -327,7 +354,7 @@ int VentaManager::capacidadSala(int idSala) {
     return sala.getCapacidadSala();
 }
 
-int VentaManager::entradasVendidas(int idPelicula, int idSala, Fecha fecha) {
+int VentaManager::entradasVendidas(int idPelicula, int idSala, const Fecha fecha) {
     int total = _archivoV.contarRegistros();
     Venta obj;
     int cant = 0;

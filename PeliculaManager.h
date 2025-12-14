@@ -6,7 +6,6 @@ private:
     PeliculaArchivo _archivoP;
 
     bool cargarPelicula(Pelicula &obj);
-    void mostrarPelicula(Pelicula &obj);
 
     void buscarPorID();
     void buscarPorNombre();
@@ -16,6 +15,7 @@ private:
 
 public:
     void cargar();
+    void mostrarPelicula(Pelicula &obj);
     void mostrarTodas();
     void buscar();
     void modificar();

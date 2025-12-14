@@ -10,10 +10,22 @@ Venta::Venta() {
     _idSala = 0;
     _cantEntradas = 0;
     _importeTotal = 0;
-    _dniComprador[0] = '\0';
+    strcpy(_dniComprador,"");
     _estado = false;
 }
 
+Venta::Venta(int id, int idPeli, int idSala, int cantEnt,
+    float impTotal, Fecha fecha, const char* dni, bool estado)
+{
+    setIDVenta(id);
+    setIDPelicula(idPeli);
+    setIDSala(idSala);
+    setCantEntradas(cantEnt);
+    setImporteTotal(impTotal);
+    setFechaProyeccion(fecha);
+    setDNIComprador(dni);
+    setEstado(estado);
+}
 
 // Setters
 void Venta::setIDVenta(int idVenta) {

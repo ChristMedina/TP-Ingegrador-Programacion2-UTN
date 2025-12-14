@@ -56,8 +56,20 @@ bool Fecha::esFechaValida() {
     return true;
 }
 
-bool Fecha::operator==(const Fecha &f) {
-    return _dia == f._dia && _mes == f._mes && _anio == f._anio;
+bool Fecha::operator==(const Fecha &fecha) {
+    return _dia == fecha._dia && _mes == fecha._mes && _anio == fecha._anio;
+}
+
+bool Fecha::operator<(const Fecha& otra) {
+    if (_anio != otra._anio) return _anio < otra._anio;
+    if (_mes  != otra._mes)  return _mes  < otra._mes;
+    return _dia < otra._dia;
+}
+
+bool Fecha::operator>(const Fecha& otra) {
+    if (_anio != otra._anio) return _anio > otra._anio;
+    if (_mes  != otra._mes)  return _mes  > otra._mes;
+    return _dia > otra._dia;
 }
 
 

@@ -10,7 +10,11 @@ class Cliente{
         bool _estado;
 
     public:
-        Cliente ();
+        Cliente();
+
+        Cliente(const char* dni, const char* nombre,
+                const char* apellido, const char* email,
+                const char* telefono, bool estado);
 
         //setters
         void setDNI(const char *dni);

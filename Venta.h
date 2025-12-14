@@ -14,6 +14,8 @@ class Venta {
 
     public:
         Venta();
+        Venta(int id, int idPeli, int idSala, int cantEnt,
+        float impTotal, Fecha fecha, const char* dni, bool estado);
 
         //setters
         void setIDVenta(int idVenta);

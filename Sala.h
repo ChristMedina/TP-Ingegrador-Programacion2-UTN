@@ -3,13 +3,14 @@
 class Sala {
     private:
         int _idSala;
+        char _nombreSala[30];
         int _tipoSala;
         int _capacidadSala;
-        char _nombreSala[30];
         bool _estado;
 
     public:
         Sala();
+        Sala(int id, const char* nombre,int tipo, int capacidad, bool estado);
 
         //setters
         void setIDSala(int idSala);

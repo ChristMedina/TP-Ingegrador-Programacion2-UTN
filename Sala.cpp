@@ -6,10 +6,18 @@ using namespace std;
 
 Sala::Sala() {
     _idSala = 0;
+    strcpy(_nombreSala, "");
     _tipoSala = 0;
     _capacidadSala = 0;
-    _nombreSala[0] = '\0';
     _estado = false;
+}
+
+Sala::Sala(int id, const char* nombre,int tipo, int capacidad, bool estado){
+    setIDSala(id);
+    setNombreSala(nombre);
+    setTipoSala(tipo);
+    setCapacidadSala(capacidad);
+    setEstado(estado);
 }
 
 // Setters
