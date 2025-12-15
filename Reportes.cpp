@@ -40,6 +40,7 @@ void Reportes::RecaudacionAnual(){
     Venta reg;
     int anioBuscado;
     float meses[12]{0};
+    const char* mesesN[12]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
     Fecha fecha;
 
     system("cls");
@@ -55,9 +56,9 @@ void Reportes::RecaudacionAnual(){
     }
 
     float total=0;
-    cout<< "Facturacion del anio: "<<anioBuscado<<endl;
+    cout<< "\nFacturacion del anio: "<<anioBuscado<<endl;
     for(int j=0;j<12;j++){
-        cout<<"Mes: "<<j+1<<"\t $"<<meses[j];
+        cout<<"|"<<mesesN[j]<<": $"<<meses[j];
         total+=meses[j];
         cout<<endl;
     }
@@ -66,4 +67,3 @@ void Reportes::RecaudacionAnual(){
 
     return;
 }
-
