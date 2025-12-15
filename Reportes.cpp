@@ -26,7 +26,8 @@ void Reportes::RecaudacionFecha(){
         }
     }
 
-    cout<<"Recaudacion total para la fecha : "<<fecha.mostrar()<<": "<<Recaudacion<<endl;
+    cout<<"Recaudacion total para la fecha : "<<fecha.mostrar()<<": "<<Recaudacion<<endl; //Esta linea me esta dando problemas
 
     system("pause");
 }
+
