@@ -16,7 +16,8 @@ void Reportes::RecaudacionFecha(){
 
     Fecha fecha;
 
-    cout<<"Ingrese la fecha a calcular la recaudacion: ";
+    system("cls");
+    cout<<"Ingrese la fecha a calcular la recaudacion: "<<endl;
     fecha.cargar();
 
     for(int i=0;i<cantRegistros;i++){
@@ -26,8 +27,11 @@ void Reportes::RecaudacionFecha(){
         }
     }
 
-    cout<<"Recaudacion total para la fecha : "<<fecha.mostrar()<<": "<<Recaudacion<<endl; //Esta linea me esta dando problemas
+    cout<<"Recaudacion total para la fecha : ";
+    fecha.mostrar();
+    cout<<": $"<<Recaudacion<<endl;
 
-    system("pause");
+    return;
 }
+
 
