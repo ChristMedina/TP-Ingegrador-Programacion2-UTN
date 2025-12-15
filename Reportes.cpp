@@ -34,4 +34,36 @@ void Reportes::RecaudacionFecha(){
     return;
 }
 
+void Reportes::RecaudacionAnual(){
+    VentaArchivo aVenta ("Ventas.dat");
+    int cantRegistros=aVenta.contarRegistros();
+    Venta reg;
+    int anioBuscado;
+    float meses[12]{0};
+    Fecha fecha;
+
+    system("cls");
+    cout << "Ingrese el anio para calcular la recaudacion: ";
+    cin >> anioBuscado;
+
+    for(int i=0;i<cantRegistros;i++){
+        reg=aVenta.LeerR(i);
+        if(reg.getEstado() && reg.getFechaProyeccion().getAnio()==anioBuscado){
+            int mes = reg.getFechaProyeccion().getMes();
+            meses[mes-1]+=reg.getImporteTotal();
+        }
+    }
+
+    float total=0;
+    cout<< "Facturacion del anio: "<<anioBuscado<<endl;
+    for(int j=0;j<12;j++){
+        cout<<"Mes: "<<j+1<<"\t $"<<meses[j];
+        total+=meses[j];
+        cout<<endl;
+    }
+
+    cout <<"\nTotal anual: $"<<total<<endl;
+
+    return;
+}
 
