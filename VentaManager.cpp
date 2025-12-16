@@ -87,18 +87,27 @@ bool VentaManager::cargarVenta(Venta &obj) {
     }
 
     // Buscar sala activa
-    Sala sala;
+    Sala salaElegida;
     bool encontrada = false;
     int totalSalas = _archivoS.contarRegistros();
 
-    for (int i = 0; i < totalSalas; i++) {
+    for (int i=0; i<totalSalas; i++) {
+
+        Sala sala;
         if (_archivoS.leer(sala, i)) {
-            if (sala.getTipoSala() == tipoSala && sala.getEstado()) {
-                obj.setIDSala(sala.getIDSala());
-                cout << "Sala asignada: "
-                     << sala.getNombreSala() << endl;
-                encontrada = true;
-                break;
+            if (sala.getTipoSala() == tipoSala && sala.getEstado()){
+
+                int cap=capacidadSala(sala.getIDSala());
+                int vendidas=entradasVendidas(idPeli, sala.getIDSala(), fecha);
+                int disponibles = cap-vendidas;
+
+                if(disponibles>0){
+                    salaElegida=sala;
+                    obj.setIDSala(sala.getIDSala());//seteo el ID de la sala aca
+                    cout<<"Sala asignada: "<<sala.getNombreSala()<<endl;
+                    encontrada=true;
+                    break;
+                }
             }
         }
     }
@@ -110,8 +119,8 @@ bool VentaManager::cargarVenta(Venta &obj) {
 
 
     // Capacidad y cantidad de entradas
-    int cap = capacidadSala(sala.getIDSala());
-    int vendidas = entradasVendidas(idPeli, sala.getIDSala(), fecha);
+    int cap = capacidadSala(salaElegida.getIDSala());
+    int vendidas = entradasVendidas(idPeli, salaElegida.getIDSala(), fecha);
     int disponibles = cap - vendidas;
 
     if (disponibles <= 0) {
@@ -119,8 +128,8 @@ bool VentaManager::cargarVenta(Venta &obj) {
         return false;
     }
 
-    cout << "\nEntradas disponibles: " << disponibles << endl;
-    cout << "Ingrese la cantidad a comprar: ";
+    cout<<"\nEntradas disponibles: "<<disponibles<<endl;
+    cout<<"Ingrese la cantidad a comprar: ";
     int cant = leerEntero();
 
     while (cant <= 0 || cant > disponibles) {
@@ -130,7 +139,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
     obj.setCantEntradas(cant);
 
     // Precio
-    float precioUnitario = precioPorTipoSala(sala.getTipoSala());
+    float precioUnitario = precioPorTipoSala(salaElegida.getTipoSala());
     if (precioUnitario <= 0) {
         cout << "Error: tipo de sala invalido." << endl;
         return false;
@@ -145,7 +154,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
     cout<<"         RESUMEN COMPRA         " << endl;
     cout<<"================================" << endl;
     cout<<" Pelicula:\t" << peli.getNombrePelicula()  << endl;
-    cout<<" Sala:\t\t" << sala.getNombreSala()<<endl;
+    cout<<" Sala:\t\t" << salaElegida.getNombreSala()<<endl;
     cout<<" Fecha:\t\t"; fecha.mostrar();
     cout<<endl;
     cout<<" Entradas:\t" << cant << endl;
