@@ -56,17 +56,17 @@ bool SalaManager::cargarSala(Sala &obj){
 
 void SalaManager::mostrarSala(Sala &obj){
     cout << "--------------------------------" << endl;
-    cout << "ID Sala: " << obj.getIDSala() << endl;
-    cout << "Nombre: " << obj.getNombreSala() << endl;
+    cout << " ID:\t\t" << obj.getIDSala() << endl;
+    cout << " Nombre:\t" << obj.getNombreSala() << endl;
 
-    cout << "Tipo: ";
+    cout << " Tipo:\t\t";
     switch(obj.getTipoSala()){
         case 1: cout << "Est ndar"; break;
         case 2: cout << "Premium"; break;
         case 3: cout << "Comfort Plus"; break;
     }
     cout << endl;
-    cout << "Capacidad: " << obj.getCapacidadSala() << endl;
+    cout << " Capacidad:\t" << obj.getCapacidadSala() << endl;
     cout << "--------------------------------" << endl;
 }
 
@@ -86,10 +86,10 @@ void SalaManager::mostrarTodas(){
         cout << "================================" << endl;
         cout << "         Listado de Salas       " << endl;
         cout << "================================" << endl;
-        cout << "1. Activas" << endl;
-        cout << "2. Inactivas" << endl;
-        cout << "3. Mostrar Todas" << endl;
-        cout << "0. Volver al Menu" << endl;
+        cout << " 1. Activas" << endl;
+        cout << " 2. Inactivas" << endl;
+        cout << " 3. Mostrar Todas" << endl;
+        cout << " 0. Volver al Menu" << endl;
         cout << "================================" << endl;
         cout << "Opcion: ";
         opcion= leerEntero();
@@ -154,7 +154,7 @@ void SalaManager::modificar(){
 
     Sala obj;
     if(!_archivoS.leer(obj, pos)){
-        cout<<"Error al lerr el registro."<<endl;
+        cout<<"Error al leer el registro."<<endl;
         return;
     }
 

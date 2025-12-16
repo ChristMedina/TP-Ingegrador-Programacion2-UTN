@@ -13,7 +13,7 @@ private:
 
 public:
     void cargar();
-    bool cargarCliente(Cliente &obj);
+    bool cargarCliente(Cliente &obj, bool pedirDni);
     void mostrarCliente(Cliente &obj);
     void mostrarTodos();
     void buscar();

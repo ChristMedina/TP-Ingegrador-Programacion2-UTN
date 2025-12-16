@@ -55,15 +55,15 @@ bool VentaManager::cargarVenta(Venta &obj) {
         cout << "Error al leer la pelicula." << endl;
         return false;
     }
-    cout << "Pelicula seleccionada: " << peli.getNombrePelicula();
+    cout << "Pelicula: " << peli.getNombrePelicula();
     cout << " (Estreno: ";
     peli.getFechaEstreno().mostrar();
-    cout<<")"<<endl;
+    cout<<")"<<endl<<endl;
 
 
     // Fecha de proyeccion
     Fecha fecha;
-    cout << "\nIngrese la fecha de proyeccion: " << endl;
+    cout << "Ingrese la fecha de proyeccion: " << endl;
     fecha.cargar();
 
     if (fecha < peli.getFechaEstreno()) {
@@ -74,7 +74,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
 
 
     // Tipo de sala
-    cout << "Seleccione el tipo de sala:" << endl;
+    cout << "\nSeleccione el tipo de sala:" << endl;
     cout << " 1) Estandar $8000" << endl;
     cout << " 2) Premium $12000" << endl;
     cout << " 3) Comfort Plus $16000" << endl;
@@ -119,7 +119,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
         return false;
     }
 
-    cout << "Entradas disponibles: " << disponibles << endl;
+    cout << "\nEntradas disponibles: " << disponibles << endl;
     cout << "Ingrese la cantidad a comprar: ";
     int cant = leerEntero();
 
@@ -139,20 +139,19 @@ bool VentaManager::cargarVenta(Venta &obj) {
     float total = precioUnitario * cant;
     obj.setImporteTotal(total);
 
-    // =========================
-    // 8) Confirmaci¢n antes de pedir DNI
-    // =========================
-    cout << "\n================================" << endl;
-    cout << "         RESUMEN COMPRA          " << endl;
-    cout << "================================" << endl;
-    cout << "Pelicula: " << peli.getNombrePelicula()  << endl;
-    cout << "Sala: " << sala.getNombreSala()<<endl;
-    cout << "Fecha: "; fecha.mostrar();
-    cout << endl;
-    cout << "Entradas: " << cant << endl;
-    cout << "Total: $" << total << endl;
-    cout << "================================" << endl;
-    cout << "¨Confirmar compra? (1-Si / 0-No): ";
+    // Resumen
+    cout<<endl;
+    cout<<"================================" << endl;
+    cout<<"         RESUMEN COMPRA         " << endl;
+    cout<<"================================" << endl;
+    cout<<" Pelicula:\t" << peli.getNombrePelicula()  << endl;
+    cout<<" Sala:\t\t" << sala.getNombreSala()<<endl;
+    cout<<" Fecha:\t\t"; fecha.mostrar();
+    cout<<endl;
+    cout<<" Entradas:\t" << cant << endl;
+    cout<<" Total:\t\t$" << total << endl;
+    cout<<"================================" << endl;
+    cout<<"¨Confirmar compra? (1-Si / 0-No): ";
 
     int ok = leerEntero();
     if (ok != 1) {
@@ -162,9 +161,10 @@ bool VentaManager::cargarVenta(Venta &obj) {
 
     // Cliente
     char dni[9];
-
+    cout<<"\nPara finalizar necesitaremos sus datos."<<endl;
+    cout<<"Ingrese su DNI para buscarlo en el sistema."<<endl;
     while (true) {
-        cout << "Ingrese su DNI (solo numeros): ";
+        cout<<"DNI: ";
         cargarCadena(dni, 9);
 
         if (!sonNumeros(dni)) {
@@ -174,34 +174,35 @@ bool VentaManager::cargarVenta(Venta &obj) {
         break;
     }
 
-    if (!clienteActivo(dni)) {
-        cout << "El cliente no existe o esta inactivo." << endl;
-        cout << "Desea registrarlo ahora? (1-Si / 0-No): ";
+    int estadoCli = estadoDeCliente(dni);
+    if (estadoCli == 0) {
+        cout<<"El cliente existe pero esta inactivo. Venta cancelada."<<endl;
+        return false;
+    }
+
+    if (estadoCli == -1) {
+        cout << "El cliente no existe."<<endl;
+        cout << "¨Desea registrarlo ahora? (1-Si / 0-No): ";
         int op = leerEntero();
 
         if (op == 1) {
             ClienteManager cm;
             Cliente nuevo;
 
-            if (cm.cargarCliente(nuevo)) {
+            if (cm.cargarCliente(nuevo, false)) {
                 if (_archivoC.guardar(nuevo)) {
-                    cout << "Cliente cargado exitosamente." << endl;
+                    cout <<"Cliente cargado exitosamente."<<endl;
                 } else {
-                    cout << "Error al guardar el cliente." << endl;
-                    return false;
-                }
+                    cout <<"Error al guardar el cliente."<<endl;
+                    return false;}
             } else {
-                cout << "Error al cargar los datos del cliente." << endl;
-                return false;
-            }
+                cout <<"Error al cargar los datos del cliente."<<endl;
+                return false;}
         } else {
-            cout << "No se puede continuar sin cliente." << endl;
-            return false;
-        }
+            cout << "No se puede continuar sin cliente."<<endl;
+            return false;}
     }
-
     obj.setDNIComprador(dni);
-
 
     // Estado
     obj.setEstado(true);
@@ -257,33 +258,33 @@ void VentaManager::anular() {
 
 void VentaManager::mostrarVenta(Venta &obj) {
     cout << "--------------------------------" << endl;
-    cout << "ID Venta: " << obj.getIDVenta() << endl;
+    cout << " ID Venta:\t" << obj.getIDVenta() << endl;
 
     Pelicula peli;
     int posPeli=_archivoP.buscarPorID(obj.getIDPelicula());
 
     if (_archivoP.leer(peli, posPeli)) {
-        cout << "Pelicula: " << peli.getNombrePelicula() << endl;
+        cout << " Pelicula:\t" << peli.getNombrePelicula() << endl;
     } else {
-        cout << "Pelicula: (no encontrada)" << endl;
+        cout << " Pelicula: (no encontrada)" << endl;
     }
 
     Sala sala;
     int posSala = _archivoS.buscarPorID(obj.getIDSala());
 
     if (_archivoS.leer(sala,posSala)) {
-        cout << "Sala: " << sala.getNombreSala() << " (" << sala.getTipoSala() << ")" << endl;
+        cout << " Sala:\t\t" << sala.getNombreSala() << endl;
     } else {
-        cout << "Sala: (no encontrada)" << endl;
+        cout << " Sala: (no encontrada)" << endl;
     }
 
-    cout << "Fecha de proyeccion: ";
+    cout << " Fecha:\t\t";
     obj.getFechaProyeccion().mostrar();
     cout << endl;
 
-    cout << "DNI comprador: " << obj.getDNIComprador() << endl;
-    cout << "Entradas: " << obj.getCantEntradas() << endl;
-    cout << "Importe total: $" << obj.getImporteTotal() << endl;
+    cout << " DNI:\t\t" << obj.getDNIComprador() << endl;
+    cout << " Entradas:\t" << obj.getCantEntradas() << endl;
+    cout << " Total:\t\t$" << obj.getImporteTotal() << endl;
     cout << "--------------------------------" << endl;
 }
 
@@ -302,10 +303,10 @@ void VentaManager::mostrarTodas() {
         cout << "================================" << endl;
         cout << "        Listado de Ventas       " << endl;
         cout << "================================" << endl;
-        cout << "1. Activas" << endl;
-        cout << "2. Anuladas" << endl;
-        cout << "3. Mostrar todas" << endl;
-        cout << "0. Volver" << endl;
+        cout << " 1. Activas" << endl;
+        cout << " 2. Anuladas" << endl;
+        cout << " 3. Mostrar todas" << endl;
+        cout << " 0. Volver" << endl;
         cout << "================================" << endl;
         cout << "Opcion: ";
         opcion = leerEntero();
@@ -374,14 +375,16 @@ bool VentaManager::salaActiva(int idSala) {
     return sala.getEstado();
 }
 
-bool VentaManager::clienteActivo(const char* dni) {
+int VentaManager::estadoDeCliente(const char* dni) {
     int pos = _archivoC.buscarPorDNI(dni);
-    if (pos == -1) return false;
+    if (pos == -1) return -1;
 
     Cliente cli;
-    if (!_archivoC.leer(cli, pos)) return false;
+    if (!_archivoC.leer(cli, pos)) return -2;
 
-    return cli.getEstado();
+    if(cli.getEstado()){
+        return 1;
+    } else {return 0;}
 }
 
 int VentaManager::capacidadSala(int idSala) {

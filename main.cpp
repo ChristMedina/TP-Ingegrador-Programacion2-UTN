@@ -1,13 +1,19 @@
 #include <iostream>
 #include "Menu.h"
+#include "Pelicula.h"
 
 using namespace std;
 
 int main()
 {
-    Menu menu;
+//    Menu menu;
+//
+//    menu.ejecutar();
 
-    menu.ejecutar();
+    Cliente cli;
+    ClienteManager cm;
+    cm.mostrarCliente(cli);
+
 
     return 0;
 }

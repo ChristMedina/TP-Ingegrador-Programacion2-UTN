@@ -10,7 +10,7 @@ void ClienteManager::cargar(){
     system("cls");
     Cliente nuevoCliente;
 
-    if (!cargarCliente(nuevoCliente)){
+    if (!cargarCliente(nuevoCliente, true)){
         return;
     }
 
@@ -23,13 +23,15 @@ void ClienteManager::cargar(){
     }
 }
 
-bool ClienteManager::cargarCliente(Cliente &obj){
-    char dni[9];
+bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
+
     char nombre[30];
     char apellido[30];
     char email[30];
     char telefono[12];
 
+    if(pedirDni){
+    char dni[9];
     cout<<"DNI: ";
 
     while (true) {
@@ -62,6 +64,7 @@ bool ClienteManager::cargarCliente(Cliente &obj){
 
     }
     obj.setDNI(dni);
+    }
 
     cout<<"Nombre: ";
     do{
@@ -113,13 +116,13 @@ bool ClienteManager::cargarCliente(Cliente &obj){
 
 void ClienteManager::mostrarCliente(Cliente &obj){
 
-    cout<<"------------------------------"<<endl;
-    cout<<" DNI: "<<obj.getDNI()<<endl;
-    cout<<" Nombre: "<<obj.getNombre()<<endl;
-    cout<<" Apellido: "<<obj.getApellido()<<endl;
-    cout<<" Email: "<<obj.getEmail()<<endl;
-    cout<<" Telefono: "<<obj.getTelefono()<<endl;
-    cout<<"------------------------------"<<endl;
+    cout<<"------------------------------------------"<<endl;
+    cout<<" DNI:\t\t"<<obj.getDNI()<<endl;
+    cout<<" Nombre:\t"<<obj.getNombre()<<endl;
+    cout<<" Apellido:\t"<<obj.getApellido()<<endl;
+    cout<<" Email:\t\t"<<obj.getEmail()<<endl;
+    cout<<" Telefono:\t"<<obj.getTelefono()<<endl;
+    cout<<"------------------------------------------"<<endl;
 }
 
 void ClienteManager::mostrarTodos(){
@@ -137,10 +140,11 @@ void ClienteManager::mostrarTodos(){
         cout << "================================" << endl;
         cout << "      Listado de clientes       " << endl;
         cout << "================================" << endl;
-        cout << "1. Activos" << endl;
-        cout << "2. Inactivos" << endl;
-        cout << "3. Mostrar todos" << endl;
-        cout << "0. Volver al menu" << endl;
+        cout << " 1. Activos" << endl;
+        cout << " 2. Inactivos" << endl;
+        cout << " 3. Mostrar todos" << endl;
+        cout << " 0. Volver al menu" << endl;
+        cout << "================================" << endl;
         cout << "Opcion: ";
         opcion=leerEntero();
 

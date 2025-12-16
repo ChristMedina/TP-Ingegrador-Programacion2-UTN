@@ -112,10 +112,10 @@ void PeliculaManager::mostrarTodas(){
         cout << "================================" << endl;
         cout << "      Listado de Peliculas      " << endl;
         cout << "================================" << endl;
-        cout << "1. Activas" << endl;
-        cout << "2. Inactivas" << endl;
-        cout << "3. Mostrar todas" << endl;
-        cout << "0. Volver" << endl;
+        cout << " 1. Activas" << endl;
+        cout << " 2. Inactivas" << endl;
+        cout << " 3. Mostrar todas" << endl;
+        cout << " 0. Volver" << endl;
         cout << "================================" << endl;
         cout << "Opcion: ";
         opcion = leerEntero();
@@ -161,15 +161,15 @@ void PeliculaManager::mostrarTodas(){
 }
 
 void PeliculaManager::mostrarPelicula(Pelicula &obj){
-    cout << "--------------------------------" << endl;
-    cout << " ID: "<<obj.getIDPelicula()<<endl;
-    cout << " Pelicula: "<<obj.getNombrePelicula()<<endl;
-    cout << " Director: "<<obj.getNombreDirector()<<endl;
-    cout << " Genero: "<<obj.getGenero()<<endl;
-    cout << " Clasificacion: "<<clasificacionToStr(obj.getClasificacion())<<endl;
-    cout << " Fecha de Estreno: ";
+    cout << "------------------------------------------" << endl;
+    cout << " ID:\t\t"<<obj.getIDPelicula()<<endl;
+    cout << " Pelicula:\t"<<obj.getNombrePelicula()<<endl;
+    cout << " Director:\t"<<obj.getNombreDirector()<<endl;
+    cout << " Genero:\t"<<obj.getGenero()<<endl;
+    cout << " Clasificacion:\t"<<clasificacionToStr(obj.getClasificacion())<<endl;
+    cout << " Estreno:\t";
     obj.getFechaEstreno().mostrar();
-    cout << "\n--------------------------------" << endl;
+    cout << "\n------------------------------------------" << endl;
 }
 
 void PeliculaManager::buscar(){
@@ -431,14 +431,14 @@ void PeliculaManager::modificar(){
 
     //system("cls");
     mostrarPelicula(obj);
-    cout << "\n Que desea modificar?"<<endl;
-    cout << " 1) Pelicula"<<endl;
-    cout << " 2) Director"<<endl;
-    cout << " 3) Genero"<<endl;
-    cout << " 4) Clasificacion"<<endl;
-    cout << " 5) Fecha de Estreno"<<endl;
-    cout << " 0) Cancelar"<<endl;
-    cout << " Opcion: ";
+    cout << "\n¨Que desea modificar?"<<endl;
+    cout << "1) Pelicula"<<endl;
+    cout << "2) Director"<<endl;
+    cout << "3) Genero"<<endl;
+    cout << "4) Clasificacion"<<endl;
+    cout << "5) Fecha de Estreno"<<endl;
+    cout << "0) Cancelar"<<endl;
+    cout << "Opcion: ";
     int opcion = leerEntero();
 
     int clasificacion;
@@ -460,7 +460,7 @@ void PeliculaManager::modificar(){
 
         case 3:{
             int opcGenero;
-            cout << "Genero:"<<endl;
+            cout << "Elija el genero:"<<endl;
             cout << " 1) Accion" << endl;
             cout << " 2) Animacion" << endl;
             cout << " 3) Ciencia Ficcion" << endl;

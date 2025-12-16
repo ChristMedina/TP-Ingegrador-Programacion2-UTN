@@ -58,6 +58,8 @@
 		<Unit filename="PeliculaManager.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="Reportes.cpp" />
+		<Unit filename="Reportes.h" />
 		<Unit filename="Sala.cpp" />
 		<Unit filename="Sala.h" />
 		<Unit filename="SalaArchivo.cpp" />

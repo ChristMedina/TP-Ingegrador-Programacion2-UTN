@@ -3,6 +3,7 @@
 #include "PeliculaManager.h"
 #include "SalaManager.h"
 #include "VentaManager.h"
+#include "Reportes.h"
 
 class Menu{
     private:
@@ -10,12 +11,14 @@ class Menu{
         PeliculaManager _managerPelicula;
         SalaManager _managerSala;
         VentaManager _managerVenta;
+        Reportes _reportes;
 
         void menuPrincipal();
         void menuClientes();
         void menuPeliculas();
         void menuSalas();
         void menuVentas();
+        void menuReportes();
 
     public:
         void ejecutar();

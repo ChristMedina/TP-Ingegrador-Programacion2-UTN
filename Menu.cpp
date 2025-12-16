@@ -26,6 +26,7 @@ void Menu::ejecutar(){
                 menuVentas();
                 break;
             case 5:
+                menuReportes();
                 break;
             case 0:
                 system("cls");
@@ -47,6 +48,7 @@ void Menu::menuPrincipal(){
     cout << " 2. Peliculas" << endl;
     cout << " 3. Salas" << endl;
     cout << " 4. Ventas" << endl;
+    cout << " 5. Reportes" <<endl;
     cout << " 0. Salir" << endl;
     cout << "================================" << endl;
     cout << "Opcion: ";
@@ -232,4 +234,35 @@ void Menu::menuVentas() {
     }
 }
 
+void Menu::menuReportes() {
+    int opcion;
 
+    while (true) {
+        system("cls");
+        cout << "================================" << endl;
+        cout << "         Menu Reportes          " << endl;
+        cout << "================================" << endl;
+        cout << " 1. Reporte de ventas por fecha" << endl;
+        cout << " 2. Reporte de ventas anual" << endl;
+        cout << " 0. Volver al Menu Principal" << endl;
+        cout << "================================" << endl;
+        cout << "Opcion: ";
+
+        opcion = leerEntero();
+
+        switch (opcion) {
+            case 1:
+                _reportes.RecaudacionFecha();
+                break;
+            case 2:
+                _reportes.RecaudacionAnual();
+                break;
+            case 0:
+                return;
+            default:
+                cout << "Opcion incorrecta." << endl;
+                break;
+        }
+        system("pause");
+    }
+}

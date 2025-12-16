@@ -11,7 +11,6 @@ private:
     ClienteArchivo _archivoC;
     PeliculaArchivo _archivoP;
     SalaArchivo _archivoS;
-
     PeliculaManager _managerP;
 
     bool cargarVenta(Venta &obj);
@@ -19,7 +18,7 @@ private:
 
     bool peliculaActiva(int idPelicula);
     bool salaActiva(int idSala);
-    bool clienteActivo(const char* dni);
+    int estadoDeCliente(const char* dni);
 
     int capacidadSala(int idSala);
     float precioPorTipoSala(int tipoSala);
