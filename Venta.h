@@ -37,3 +37,5 @@ class Venta {
         const char* getDNIComprador();
         bool getEstado();
 };
+
+

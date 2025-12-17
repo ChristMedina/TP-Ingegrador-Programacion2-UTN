@@ -26,3 +26,4 @@ class Sala {
         const char* getNombreSala();
         bool getEstado();
 };
+

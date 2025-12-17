@@ -14,7 +14,12 @@ private:
     PeliculaManager _managerP;
 
     bool cargarVenta(Venta &obj);
+
+public:
+    void cargar();
     void mostrarVenta(Venta &obj);
+    void mostrarTodas();
+    void anular();
 
     bool peliculaActiva(int idPelicula);
     bool salaActiva(int idSala);
@@ -23,9 +28,4 @@ private:
     int capacidadSala(int idSala);
     float precioPorTipoSala(int tipoSala);
     int entradasVendidas(int idPelicula, int idSala, const Fecha fecha);
-
-public:
-    void cargar();
-    void mostrarTodas();
-    void anular();
 };

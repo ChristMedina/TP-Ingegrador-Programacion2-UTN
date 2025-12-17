@@ -8,64 +8,42 @@ using namespace std;
 
 void ClienteManager::cargar(){
     system("cls");
-    Cliente nuevoCliente;
+    char dni[9];
+    cout << "Ingrese el DNI: ";
+    cargarCadena(dni, 9);
 
-    if (!cargarCliente(nuevoCliente, true)){
-        return;
-    }
-
-    if (_archivoC.guardar(nuevoCliente)){
-
-        cout<<"Cliente cargado exitosamente."<<endl;
-    }
-    else {
-        cout<<"No se pudo cargar el cliente. "<<endl;
+    if (cargarCliente(dni)) {
+        cout << "Cliente cargado exitosamente." << endl;
+    } else {
+        cout << "No se pudo cargar el cliente." << endl;
     }
 }
 
-bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
+bool ClienteManager::cargarCliente(const char* dni){
+    Cliente nuevo;
+
+    if(!sonNumeros(dni) || strlen(dni) != 8){
+        cout << "El DNI debe tener 8 digitos."<<endl;
+        return false;
+    }
+
+    int pos = _archivoC.buscarPorDNI(dni);
+    if(pos != -1){
+        Cliente existe;
+        if(_archivoC.leer(existe, pos)){
+            if(existe.getEstado()){
+                cout<<"Ya existe un cliente con ese DNI"<<endl;
+            } else {
+                cout<<"El cliente existe pero esta inactivo."<<endl;
+            }
+        }else {
+            cout<<"Error al leer el cliente."<<endl;
+        }
+        return false;
+    }
+    nuevo.setDNI(dni);
 
     char nombre[30];
-    char apellido[30];
-    char email[30];
-    char telefono[12];
-
-    if(pedirDni){
-    char dni[9];
-    cout<<"DNI: ";
-
-    while (true) {
-        cargarCadena(dni, 9);
-
-        if (!sonNumeros(dni) || strlen(dni)!=8) {
-            cout << "El DNI tiene que ser numerico y contener 8 digitos. Intente de nuevo: ";
-            continue;// el continue sirve para omitir el resto del bucle y vuelve al inicio
-        }
-
-        int pos = _archivoC.buscarPorDNI(dni); //Busca si ya existe el dni
-        if (pos == -1) {
-            break;  //Si no existe sale del bucle y sigue con el resto de la carga
-        }
-
-        // vemos si esta activo o dado de baja
-        if (pos != -1) {
-            Cliente existe;
-            _archivoC.leer(existe, pos);
-
-            if (existe.getEstado()) {
-                cout << "Ya existe un cliente con ese DNI." << endl;
-                return false;
-            }
-            else {
-                cout << "El cliente ya existe pero est  inactivo." << endl;
-                return false;
-            }
-        }
-
-    }
-    obj.setDNI(dni);
-    }
-
     cout<<"Nombre: ";
     do{
         cargarCadena(nombre, 30);
@@ -74,8 +52,10 @@ bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
         }
 
     } while (!sonLetras(nombre));
-    obj.setNombre(nombre);
+    nuevo.setNombre(nombre);
 
+    //Apellido
+    char apellido[30];
     cout<<"Apellido: ";
     do{
         cargarCadena(apellido, 30);
@@ -84,8 +64,9 @@ bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
         }
 
     } while (!sonLetras(apellido));
-    obj.setApellido(apellido);
+    nuevo.setApellido(apellido);
 
+    char email[30];
     cout<<"Email: ";
     do {
         cargarCadena(email, 30);
@@ -93,8 +74,9 @@ bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
             cout << "El email no es valido. Intente de nuevo: ";
 
     } while (!validarEmail(email));
-    obj.setEmail(email);
+    nuevo.setEmail(email);
 
+    char telefono[30];
     cout<<"Telefono: ";
     cargarCadena(telefono, 12);
 
@@ -108,10 +90,15 @@ bool ClienteManager::cargarCliente(Cliente &obj, bool pedirDni=true){
         }
         cargarCadena(telefono, 12);
     }
-    obj.setTelefono(telefono);
+    nuevo.setTelefono(telefono);
 
-    obj.setEstado(true);
-    return true;
+    nuevo.setEstado(true);
+    if(_archivoC.guardar(nuevo)){
+        return true;
+    }else{
+        cout<<"No se pudo"<<endl;
+        return false;
+    }
 }
 
 void ClienteManager::mostrarCliente(Cliente &obj){

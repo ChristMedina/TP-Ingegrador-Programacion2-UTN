@@ -6,14 +6,11 @@ using namespace std;
 
 int main()
 {
-//    Menu menu;
-//
-//    menu.ejecutar();
+    Menu menu;
 
-    Cliente cli;
-    ClienteManager cm;
-    cm.mostrarCliente(cli);
-
+    menu.ejecutar();
 
     return 0;
 }
+
+

@@ -176,16 +176,17 @@ bool VentaManager::cargarVenta(Venta &obj) {
         cout<<"DNI: ";
         cargarCadena(dni, 9);
 
-        if (!sonNumeros(dni)) {
-            cout << "El DNI debe contener solo numeros. Intente de nuevo." << endl;
+        if (!sonNumeros(dni) || strlen(dni) != 8) {
+            cout << "El DNI debe ser numerico y tener 8 digitos. Intente de nuevo.\n";
             continue;
         }
         break;
     }
 
     int estadoCli = estadoDeCliente(dni);
-    if (estadoCli == 0) {
-        cout<<"El cliente existe pero esta inactivo. Venta cancelada."<<endl;
+    if (estadoCli==0) {
+        cout<<"El cliente existe pero esta inactivo. Requiere reactivacion."<<endl;
+        cout<<"Venta cancelada."<<endl;
         return false;
     }
 
@@ -196,20 +197,15 @@ bool VentaManager::cargarVenta(Venta &obj) {
 
         if (op == 1) {
             ClienteManager cm;
-            Cliente nuevo;
+            if(!cm.cargarCliente(dni)){
+                cout<<"No se pudo registrar el cliente. Venta cancelada."<<endl;
+                return false;
+            }
 
-            if (cm.cargarCliente(nuevo, false)) {
-                if (_archivoC.guardar(nuevo)) {
-                    cout <<"Cliente cargado exitosamente."<<endl;
-                } else {
-                    cout <<"Error al guardar el cliente."<<endl;
-                    return false;}
-            } else {
-                cout <<"Error al cargar los datos del cliente."<<endl;
-                return false;}
-        } else {
-            cout << "No se puede continuar sin cliente."<<endl;
-            return false;}
+        }else{
+            cout<<"No se puede continuar sin cliente."<<endl;
+            return false;
+        }
     }
     obj.setDNIComprador(dni);
 
