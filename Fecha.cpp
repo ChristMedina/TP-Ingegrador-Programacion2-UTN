@@ -41,8 +41,8 @@ bool Fecha::esBisiesto(int anio) {
 bool Fecha::esFechaValida() {
     int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    const int anioMax=2100;
-    const int anioMin=1900;
+    const int anioMax=2026;
+    const int anioMin=2000;
 
     if(_anio < anioMin || _anio>anioMax){
         return false;

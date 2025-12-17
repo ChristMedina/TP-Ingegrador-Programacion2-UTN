@@ -40,7 +40,7 @@ bool VentaManager::cargarVenta(Venta &obj) {
 
     // Pelicula
     cout << "Ingrese el ID de la pelicula: ";
-     int idPeli = leerEntero();
+    int idPeli = leerEntero();
 
     if (!peliculaActiva(idPeli)) {
         cout << "La pelicula no existe o esta inactiva." << endl;

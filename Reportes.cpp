@@ -4,6 +4,7 @@
 #include "Venta.h"
 #include "VentaArchivo.h"
 #include "funcionesGlobales.h"
+#include "VentaManager.h"
 
 using namespace std;
 
@@ -82,7 +83,7 @@ void Reportes::RecaudacionAnual(){
     int totalVentas = 0;
 
     cout<<"\n===================================="<<endl;
-    cout<<"      FACTURACION ANUAL - " << anioBuscado<<endl;
+    cout<<"      Facturacion Anual - " << anioBuscado<<endl;
     cout<<"===================================="<<endl;
     cout<<"Mes             Ventas  Recaudacion "<<endl;
     cout<<"------------------------------------"<<endl;
@@ -104,4 +105,133 @@ void Reportes::RecaudacionAnual(){
     cout<<"-----------------------------------"<<endl;
     cout<<"TOTAL\t\t" << totalVentas << "\t$" << totalAnual<<endl;
     cout<<"==================================="<<endl;
+}
+
+void Reportes::DetallePeliculaAnual() {
+    VentaArchivo arch("Ventas.dat");
+    Venta reg;
+
+    system("cls");
+    cout << "Ingrese el ID de la pelicula: ";
+    int idPelicula=leerEntero();
+
+    Pelicula peli;
+    PeliculaArchivo archiP;
+    int posPeli = archiP.buscarPorID(idPelicula);
+    if (posPeli==-1){
+        cout<<"No se encontr¢ la pelicula."<<endl;
+        return;
+    }
+
+    if (!archiP.leer(peli, posPeli)) {
+        cout<<"Error al leer la pelicula."<<endl;
+        return;
+    }
+    if (!peli.getEstado()) {
+        cout<<"La pelicula est  inactiva."<<endl;
+        return;
+    }
+
+    cout << "Ingrese a¤o: ";
+    int anio=leerEntero();
+    while (anio < 2000 || anio > 2026){
+        cout<<"A¤o invalido. Reintente entre 2000 y 2026: ";
+        anio=leerEntero();
+    }
+
+    int ventas = 0;
+    int entradas = 0;
+    float recaudacion = 0;
+
+    int total = arch.contarRegistros();
+
+    for(int i=0; i<total; i++){
+
+        if (arch.leer(reg, i) && reg.getEstado() && reg.getIDPelicula() == idPelicula &&
+            reg.getFechaProyeccion().getAnio() == anio) {
+
+            ventas++;
+            entradas += reg.getCantEntradas();
+            recaudacion += reg.getImporteTotal();
+        }
+    }
+    if (ventas == 0){
+        cout << "No hubo ventas para esa pelicula en ese a¤o."<<endl;
+        return;
+    }
+
+    cout<<"\n======================================"<<endl;
+    cout<<"         Detalle de Pelicula          "<<endl;
+    cout<<"======================================"<<endl;
+    cout<<" Pelicula:\t\t" << peli.getNombrePelicula() << endl;
+    cout<<" A¤o:\t\t\t" << anio << endl;
+    cout<<" Ventas:\t\t" << ventas << endl;
+    cout<<" Entradas vendidas:\t" << entradas << endl;
+    cout<<" Recaudacion total:\t$" << recaudacion << endl;
+    cout<<"======================================"<<endl;
+}
+
+void Reportes::DetalleSalaAnual() {
+    VentaArchivo arch("Ventas.dat");
+    Venta reg;
+
+    system("cls");
+    cout << "Ingrese el ID de la sala: ";
+    int idSala = leerEntero();
+
+    Sala sala;
+    SalaArchivo archSala;
+    int posSala = archSala.buscarPorID(idSala);
+    if (posSala == -1) {
+        cout << "No se encontr¢ la sala." << endl;
+        return;
+    }
+
+    if (!archSala.leer(sala, posSala)) {
+        cout << "Error al leer la sala." << endl;
+        return;
+    }
+
+    if (!sala.getEstado()) {
+        cout << "La sala est  inactiva." << endl;
+        return;
+    }
+
+    cout << "Ingrese a¤o: ";
+    int anio = leerEntero();
+    while (anio < 2000 || anio > 2026) {
+        cout << "A¤o invalido. Reintente entre 2000 y 2026: ";
+        anio = leerEntero();
+    }
+
+    int ventas = 0;
+    int entradas = 0;
+    float recaudacion = 0;
+
+    int total = arch.contarRegistros();
+    for (int i = 0; i < total; i++) {
+        if (arch.leer(reg, i) &&
+            reg.getEstado() && reg.getIDSala() == idSala &&
+            reg.getFechaProyeccion().getAnio() == anio) {
+
+            ventas++;
+            entradas += reg.getCantEntradas();
+            recaudacion += reg.getImporteTotal();
+        }
+    }
+
+    if (ventas==0){
+        cout<<"No hubo ventas para esa Sala en ese a¤o."<<endl;
+        return;
+    }
+
+    cout<<"\n======================================"<<endl;
+    cout<<"            Detalle de Sala            "<<endl;
+    cout<<"======================================"<<endl;
+    cout<<"Sala: " << sala.getNombreSala() << endl;
+    cout<<"A¤o: " << anio << endl;
+    cout<<"Ventas: " << ventas << endl;
+    cout<<"Entradas vendidas: " << entradas << endl;
+    cout<<"Recaudacion total: $ " << recaudacion << endl;
+    cout<<"======================================"<<endl;
 }

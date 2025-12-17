@@ -243,7 +243,9 @@ void Menu::menuReportes() {
         cout << "         Menu Reportes          " << endl;
         cout << "================================" << endl;
         cout << " 1. Reporte de ventas por fecha" << endl;
-        cout << " 2. Reporte de ventas anual" << endl;
+        cout << " 2. Reporte anual de ventas" << endl;
+        cout << " 3. Reporte anual de peliculas" << endl;
+        cout << " 4. Reporte anual de salas" << endl;
         cout << " 0. Volver al Menu Principal" << endl;
         cout << "================================" << endl;
         cout << "Opcion: ";
@@ -256,6 +258,12 @@ void Menu::menuReportes() {
                 break;
             case 2:
                 _reportes.RecaudacionAnual();
+                break;
+            case 3:
+                _reportes.DetallePeliculaAnual();
+                break;
+            case 4:
+                _reportes.DetalleSalaAnual();
                 break;
             case 0:
                 return;

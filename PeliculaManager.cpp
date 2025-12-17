@@ -522,6 +522,7 @@ void PeliculaManager::modificar(){
             return;
     }
 
+
     if(_archivoP.modificar(obj, pos)){
         cout<<"\nPelicula modificada correctamente."<<endl;
         cout<<"Nuevos Cambios:"<<endl;
