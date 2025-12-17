@@ -16,8 +16,8 @@ public:
     void modificar();
     void eliminar();
     void restaurar();
-
     void buscarPorDNI();
     void buscarPorNombre();
     void buscarPorApellido();
 };
+

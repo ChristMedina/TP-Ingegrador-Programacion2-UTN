@@ -22,7 +22,6 @@ void VentaManager::cargar() {
 bool VentaManager::cargarVenta(Venta &obj) {
     system("cls");
 
-
     // ID Venta automatica
     int id = _archivoV.asignarID();
     obj.setIDVenta(id);
@@ -200,8 +199,9 @@ bool VentaManager::cargarVenta(Venta &obj) {
             if(!cm.cargarCliente(dni)){
                 cout<<"No se pudo registrar el cliente. Venta cancelada."<<endl;
                 return false;
+            } else {
+                cout<<"Cliente cargado exitosamente"<<endl;
             }
-
         }else{
             cout<<"No se puede continuar sin cliente."<<endl;
             return false;

@@ -87,24 +87,3 @@ bool validarEmail(const char* email) {
     return true;//Si esta todo bien retorna true
 
 }
-
-/*bool buscarCadena(const char *texto, const char *buscado){
-    char t[50], b[50];
-
-    //copiamos sin modificar los originales
-    strncpy(t, texto, 49);
-    strncpy(b, buscado, 49);
-
-    //aseguramos que termine de forma segura
-    t[49] = '\0';
-    b[49] = '\0';
-
-    //strlwr convierte una cadena de caracteres a min£sculas
-    //pasamos todo a minusculas
-    strlwr(t);
-    strlwr(b);
-
-    //busca "b" dentro de "t" y retorna
-    return strstr(t, b);
-}
-*/

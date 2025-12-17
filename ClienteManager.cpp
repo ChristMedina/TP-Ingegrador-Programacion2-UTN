@@ -13,9 +13,9 @@ void ClienteManager::cargar(){
     cargarCadena(dni, 9);
 
     if (cargarCliente(dni)) {
-        cout << "Cliente cargado exitosamente." << endl;
+        cout<<"Cliente cargado exitosamente."<<endl;
     } else {
-        cout << "No se pudo cargar el cliente." << endl;
+        cout<<"No se pudo cargar el cliente."<<endl;
     }
 }
 

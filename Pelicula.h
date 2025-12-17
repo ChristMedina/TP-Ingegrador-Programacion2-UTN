@@ -33,5 +33,4 @@ class Pelicula {
         int getClasificacion();
         Fecha getFechaEstreno();
         bool getEstado();
-
 };

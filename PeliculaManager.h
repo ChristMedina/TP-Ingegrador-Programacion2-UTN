@@ -4,7 +4,6 @@
 class PeliculaManager {
 private:
     PeliculaArchivo _archivoP;
-
     bool cargarPelicula(Pelicula &obj);
 
 public:
